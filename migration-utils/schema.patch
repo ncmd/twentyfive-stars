@@ -1,0 +1,153 @@
+diff --git a/src/database_schema.rs b/src/database_schema.rs
+index 5f69ace..3b8b804 100644
+--- a/src/database_schema.rs
++++ b/src/database_schema.rs
+@@ -1,7 +1,8 @@
+ table! {
++    #[allow(unused_imports)]
+     use diesel::sql_types::*;
+     use crate::data::{BattleType as Battle_type, BattleIcon as Battle_icon, Faction, CardRarity as Card_rarity, CardCategory as Card_category, CharacterTrait as Character_trait, ModeType as Mode_type};
+ 
+     battle_cards (id) {
+         id -> Int4,
+         external_id -> Uuid,
+@@ -15,12 +16,13 @@ table! {
+         attack_modifier -> Nullable<Int4>,
+         defense_modifier -> Nullable<Int4>,
+     }
+ }
+ 
+ table! {
++    #[allow(unused_imports)]
+     use diesel::sql_types::*;
+     use crate::data::{BattleType as Battle_type, BattleIcon as Battle_icon, Faction, CardRarity as Card_rarity, CardCategory as Card_category, CharacterTrait as Character_trait, ModeType as Mode_type};
+ 
+     cards (id) {
+         id -> Int4,
+         external_id -> Uuid,
+@@ -30,12 +32,13 @@ table! {
+         category -> Card_category,
+         wave_id -> Int4,
+     }
+ }
+ 
+ table! {
++    #[allow(unused_imports)]
+     use diesel::sql_types::*;
+     use crate::data::{BattleType as Battle_type, BattleIcon as Battle_icon, Faction, CardRarity as Card_rarity, CardCategory as Card_category, CharacterTrait as Character_trait, ModeType as Mode_type};
+ 
+     character_modes (id) {
+         id -> Int4,
+         external_id -> Uuid,
+@@ -53,12 +56,13 @@ table! {
+         attack_modifier -> Nullable<Int4>,
+         defense_modifier -> Nullable<Int4>,
+     }
+ }
+ 
+ table! {
++    #[allow(unused_imports)]
+     use diesel::sql_types::*;
+     use crate::data::{BattleType as Battle_type, BattleIcon as Battle_icon, Faction, CardRarity as Card_rarity, CardCategory as Card_category, CharacterTrait as Character_trait, ModeType as Mode_type};
+ 
+     stratagem_cards (id) {
+         id -> Int4,
+         external_id -> Uuid,
+@@ -68,12 +72,13 @@ table! {
+         faction -> Nullable<Faction>,
+         stars -> Int4,
+     }
+ }
+ 
+ table! {
++    #[allow(unused_imports)]
+     use diesel::sql_types::*;
+     use crate::data::{BattleType as Battle_type, BattleIcon as Battle_icon, Faction, CardRarity as Card_rarity, CardCategory as Card_category, CharacterTrait as Character_trait, ModeType as Mode_type};
+ 
+     waves (id) {
+         id -> Int4,
+         external_id -> Uuid,
+@@ -91,7 +96,83 @@ joinable!(stratagem_cards -> cards (card_id));
+ allow_tables_to_appear_in_same_query!(
+     battle_cards,
+     cards,
+     character_modes,
+     stratagem_cards,
+     waves,
++    cards_with_pageinfo
+ );
++
++// Custom views
++table! {
++    #[allow(unused_imports)]
++    use diesel::sql_types::*;
++    use crate::data::{BattleType as Battle_type, BattleIcon as Battle_icon, Faction, CardRarity as Card_rarity, CardCategory as Card_category, CharacterTrait as Character_trait, ModeType as Mode_type};
++
++    cards_with_pageinfo (id) {
++        id -> Int4,
++        external_id -> Uuid,
++        tcg_id -> Varchar,
++        rarity -> Card_rarity,
++        number -> Varchar,
++        category -> Card_category,
++        wave_id -> Int4,
++        has_previous -> Bool,
++        has_next -> Bool,
++    }
++}
++
++table! {
++    #[allow(unused_imports)]
++    use diesel::sql_types::*;
++    use crate::data::{BattleType as Battle_type, BattleIcon as Battle_icon, Faction, CardRarity as Card_rarity, CardCategory as Card_category, CharacterTrait as Character_trait, ModeType as Mode_type};
++
++    battle_cards_with_pageinfo (id) {
++        id -> Int4,
++        external_id -> Uuid,
++        tcg_id -> Varchar,
++        rarity -> Card_rarity,
++        number -> Varchar,
++        category -> Card_category,
++        wave_id -> Int4,
++        has_previous -> Bool,
++        has_next -> Bool,
++    }
++}
++
++table! {
++    #[allow(unused_imports)]
++    use diesel::sql_types::*;
++    use crate::data::{BattleType as Battle_type, BattleIcon as Battle_icon, Faction, CardRarity as Card_rarity, CardCategory as Card_category, CharacterTrait as Character_trait, ModeType as Mode_type};
++
++    character_cards_with_pageinfo (id) {
++        id -> Int4,
++        external_id -> Uuid,
++        tcg_id -> Varchar,
++        rarity -> Card_rarity,
++        number -> Varchar,
++        category -> Card_category,
++        wave_id -> Int4,
++        has_previous -> Bool,
++        has_next -> Bool,
++    }
++}
++
++table! {
++    #[allow(unused_imports)]
++    use diesel::sql_types::*;
++    use crate::data::{BattleType as Battle_type, BattleIcon as Battle_icon, Faction, CardRarity as Card_rarity, CardCategory as Card_category, CharacterTrait as Character_trait, ModeType as Mode_type};
++
++    stratagem_cards_with_pageinfo (id) {
++        id -> Int4,
++        external_id -> Uuid,
++        tcg_id -> Varchar,
++        rarity -> Card_rarity,
++        number -> Varchar,
++        category -> Card_category,
++        wave_id -> Int4,
++        has_previous -> Bool,
++        has_next -> Bool,
++    }
++}
++
++joinable!(cards_with_pageinfo -> waves (wave_id));
