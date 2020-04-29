@@ -7,12 +7,14 @@ use diesel::prelude::*;
 use tokio_diesel::*;
 
 #[derive(Clone, Debug)]
-pub struct ExtraProps {
+pub struct CharacterCard {
   modes: Vec<CharacterMode>,
 }
 
-#[derive(Clone, Debug)]
-pub struct CharacterCard(Card, ExtraProps);
+impl BaseCard for CharacterCard {};
+
+// #[derive(Clone, Debug)]
+// pub struct CharacterCard(Card, ExtraProps);
 
 impl CharacterCard {
   pub fn new(card: Card, modes: ExtraProps) -> Self {

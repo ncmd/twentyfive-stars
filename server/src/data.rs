@@ -1,4 +1,5 @@
 pub mod alt_mode;
+pub mod base_card;
 pub mod battle_card;
 pub mod battle_icon;
 pub mod battle_type;
@@ -23,6 +24,7 @@ pub mod uuid_table;
 pub mod wave;
 
 pub use alt_mode::AltMode;
+pub use base_card::BaseCard;
 pub use battle_card::BattleCard;
 pub use battle_icon::BattleIcon;
 pub use battle_type::BattleType;
